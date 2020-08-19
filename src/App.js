@@ -25,10 +25,20 @@ function App() {
     },
     [ownedMiners]
   );
+  function buyMiner() {
+    if (money < 10) return;
+    setMoney(money - 10);
+    setOwnedMiners(ownedMiners + 1);
+  }
+  function mining() {
+    setMoney(money + ownedMiners * 1);
+  }
+  setInterval(mining(), 1000);
   return (
     <>
       <h1>Money: {money}</h1>
       <h1>Miners: {ownedMiners}</h1>
+      <button onClick={buyMiner}>Buy Miner (10M)</button>
     </>
   );
 }
