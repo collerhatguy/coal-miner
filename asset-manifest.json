@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/coal-miner/static/css/main.a8179753.chunk.css",
+    "main.js": "/coal-miner/static/js/main.e1600392.chunk.js",
+    "main.js.map": "/coal-miner/static/js/main.e1600392.chunk.js.map",
+    "runtime-main.js": "/coal-miner/static/js/runtime-main.466c42b5.js",
+    "runtime-main.js.map": "/coal-miner/static/js/runtime-main.466c42b5.js.map",
+    "static/js/2.1e2bd7ff.chunk.js": "/coal-miner/static/js/2.1e2bd7ff.chunk.js",
+    "static/js/2.1e2bd7ff.chunk.js.map": "/coal-miner/static/js/2.1e2bd7ff.chunk.js.map",
+    "index.html": "/coal-miner/index.html",
+    "precache-manifest.0ad23abed46bd9fa64a5b2ba3f867831.js": "/coal-miner/precache-manifest.0ad23abed46bd9fa64a5b2ba3f867831.js",
+    "service-worker.js": "/coal-miner/service-worker.js",
+    "static/css/main.a8179753.chunk.css.map": "/coal-miner/static/css/main.a8179753.chunk.css.map",
+    "static/js/2.1e2bd7ff.chunk.js.LICENSE.txt": "/coal-miner/static/js/2.1e2bd7ff.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.466c42b5.js",
+    "static/js/2.1e2bd7ff.chunk.js",
+    "static/css/main.a8179753.chunk.css",
+    "static/js/main.e1600392.chunk.js"
+  ]
+}
