@@ -5,12 +5,14 @@ import "./app.css";
 
 function App() {
   const MONEY_LOCAL_STORAGE_KEY = "coalMiner.money";
-  const OWNED_MINERS_LOCAL_STORAGE_KEY = "coalMiner.miners";
-  const OWNED_DRILLS_LOCAL_STORAGE_KEY = "coalMiner.drills";
 
   const [money, setMoney] = useState(10);
-  const [ownedMiners, setOwnedMiners] = useState(0);
-  const [ownedDrills, setOwnedDrills] = useState(0);
+  const [ownedMiners, setOwnedMiners] = useState(
+    JSON.parse(localStorage.getItem(miner.OWNED_LOCAL_STORAGE_KEY)) || 0
+  );
+  const [ownedDrills, setOwnedDrills] = useState(
+    JSON.parse(localStorage.getItem(drill.OWNED_LOCAL_STORAGE_KEY)) || 0
+  );
   const [multiplier, setMultiplier] = useState(1);
   useEffect(
     function () {
@@ -18,24 +20,8 @@ function App() {
     },
     [money]
   );
-  useEffect(
-    function () {
-      localStorage.setItem(
-        OWNED_MINERS_LOCAL_STORAGE_KEY,
-        JSON.stringify(ownedMiners)
-      );
-    },
-    [ownedMiners]
-  );
-  useEffect(
-    function () {
-      localStorage.setItem(
-        OWNED_DRILLS_LOCAL_STORAGE_KEY,
-        JSON.stringify(ownedDrills)
-      );
-    },
-    [ownedDrills]
-  );
+  useEffect(miner.save(), [ownedMiners]);
+  useEffect(drill.save(), [ownedDrills]);
   const setMultiplier1 = () => {
     setMultiplier(1);
   };
@@ -93,11 +79,12 @@ function App() {
   setInterval(miningDrills, drill.speed);
   return (
     <>
+      <h1>Coal Miners</h1>
       <div id="display">
-        <h1>Money: {money}</h1>
-        <h1>Miners: {ownedMiners}</h1>
+        <h2>Money: {money}</h2>
+        <h2>Miners: {ownedMiners}</h2>
         <div class="progressBar" id="minerProgress"></div>
-        <h1>Drills: {ownedDrills}</h1>
+        <h2>Drills: {ownedDrills}</h2>
         <div class="progressBar" id="drillProgress"></div>
       </div>
       <div id="buyContainer">
@@ -117,30 +104,33 @@ function App() {
         </button>
       </div>
       <div id="multiplierContainer">
-        <input
-          type="radio"
-          value="1"
-          id="1multiplier"
-          name="multiplier"
-          onClick={setMultiplier1}
-        ></input>
-        <label for="1multiplier">1x</label>
-        <input
-          type="radio"
-          value="10"
-          id="10multiplier"
-          name="multiplier"
-          onClick={setMultiplier10}
-        ></input>
-        <label for="10multiplier">10x</label>
-        <input
-          type="radio"
-          value="100"
-          id="100multiplier"
-          name="multiplier"
-          onClick={setMultiplier100}
-        ></input>
-        <label for="100multiplier">100x</label>
+        <fieldset>
+          <legend>Multipliers for buying in mass:</legend>
+          <input
+            type="radio"
+            value="1"
+            id="1multiplier"
+            name="multiplier"
+            onClick={setMultiplier1}
+          ></input>
+          <label for="1multiplier">1x</label>
+          <input
+            type="radio"
+            value="10"
+            id="10multiplier"
+            name="multiplier"
+            onClick={setMultiplier10}
+          ></input>
+          <label for="10multiplier">10x</label>
+          <input
+            type="radio"
+            value="100"
+            id="100multiplier"
+            name="multiplier"
+            onClick={setMultiplier100}
+          ></input>
+          <label for="100multiplier">100x</label>
+        </fieldset>
       </div>
     </>
   );
