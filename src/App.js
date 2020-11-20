@@ -83,10 +83,10 @@ function App() {
         </button>
       </div>
       <div id="upgradeContainer">
-        <button id="minerSpeedUpgradeButtpn" onClick={upgradeMinerSpeed}>
+        <button id="minerSpeedUpgradeButton" onClick={upgradeMinerSpeed}>
           Upgrade Miner Speed (5,000M)
         </button>
-        <button id="drillSpeedUpgradeButtpn" onClick={upgradeDrillSpeed}>
+        <button id="drillSpeedUpgradeButton" onClick={upgradeDrillSpeed}>
           Upgrade Drill Speed (50,000M)
         </button>
       </div>
