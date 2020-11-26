@@ -1,3 +1,7 @@
+:root {
+  --timer: 0s;
+}
+
 #display,
 #buyContainer,
 #upgradeContainer {
@@ -21,8 +25,14 @@ button {
 }
 .progressBar::after {
   align-items: center;
-  min-width: 1em;
-  max-width: calc(100% - 1em);
-  width: calc(var(--width, 0) * 1%);
   background-color: white;
+  animation: progress var(--timer) ease-in-out 0s infinite infinite;
+}
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }

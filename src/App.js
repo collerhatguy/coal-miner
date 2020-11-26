@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { miner } from "./miner";
 import { drill } from "./drill";
+import { currency } from "./misc";
 import "./app.css";
 
 function App() {
-  const MONEY_LOCAL_STORAGE_KEY = "coalMiner.money";
-
-  const [money, setMoney] = useState(10);
+  const [money, setMoney] = useState(
+    JSON.parse(localStorage.getItem(currency.OWNED_LOCAL_STORAGE_KEY)) || 10
+  );
   const [ownedMiners, setOwnedMiners] = useState(
     JSON.parse(localStorage.getItem(miner.OWNED_LOCAL_STORAGE_KEY)) || 0
   );
@@ -14,14 +15,10 @@ function App() {
     JSON.parse(localStorage.getItem(drill.OWNED_LOCAL_STORAGE_KEY)) || 0
   );
   const [multiplier, setMultiplier] = useState(1);
-  useEffect(
-    function () {
-      localStorage.setItem(MONEY_LOCAL_STORAGE_KEY, JSON.stringify(money));
-    },
-    [money]
-  );
-  useEffect(miner.save(), [ownedMiners]);
-  useEffect(drill.save(), [ownedDrills]);
+
+  useEffect(currency.save(money), [money]);
+  useEffect(miner.saveAmount(ownedMiners), [ownedMiners]);
+  useEffect(drill.saveAmount(ownedDrills), [ownedDrills]);
   const setMultiplier1 = () => {
     setMultiplier(1);
   };
@@ -50,31 +47,21 @@ function App() {
     setMoney((prevMoney) => prevMoney + ownedDrills * 10);
   };
   const upgradeMinerSpeed = () => {
-    if (money >= miner.speedUpgradeCost) {
-      setMoney(money - miner.speedUpgradeCost);
-      miner.speed = miner.speed - miner.speedUpgradeRate;
-      miner.speedUpgradeCost += miner.speedUpgradeCost;
-      if (miner.speed - miner.speedUpgradeRate <= 0) {
-        document.getElementById("minerSpeedUpgradeButton").remove();
-      }
-    }
+    if (!(money >= miner.speedUpgradeCost)) return;
+    setMoney(money - miner.speedUpgradeCost);
+    miner.speed = miner.speed - miner.speedUpgradeRate;
+    miner.speedUpgradeCost += miner.speedUpgradeCost;
+    if (!(miner.speed - miner.speedUpgradeRate <= 0)) return;
+    document.getElementById("minerSpeedUpgradeButton").remove();
   };
   const upgradeDrillSpeed = () => {
-    if (money >= drill.speedUpgradeCost) {
-      setMoney(money - drill.speedUpgradeCost);
-      drill.speed = drill.speed - drill.speedUpgradeRate;
-      drill.speedUpgradeCost += drill.speedUpgradeCost;
-      if (drill.speed - drill.speedUpgradeRate <= 0) {
-        document.getElementById("drillSpeedUpgradeButton").remove();
-      }
-    }
+    if (!(money >= drill.speedUpgradeCost)) return;
+    setMoney(money - drill.speedUpgradeCost);
+    drill.speed = drill.speed - drill.speedUpgradeRate;
+    drill.speedUpgradeCost += drill.speedUpgradeCost;
+    if (!(drill.speed - drill.speedUpgradeRate <= 0)) return;
+    document.getElementById("drillSpeedUpgradeButton").remove();
   };
-  const minerProgress = document.getElementById("minerProgress");
-  setInterval(() => {
-    const computedStyle = getComputedStyle(minerProgress);
-    const width = parseFloat(computedStyle.getPropertyValue("--width")) || 0;
-    minerProgress.style.setProperty("--width", width + 0.1);
-  }, 5);
   setInterval(miningMiners, miner.speed);
   setInterval(miningDrills, drill.speed);
   return (
