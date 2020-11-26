@@ -3,9 +3,9 @@ export const drill = {
   speed: 1000,
   speedUpgradeCost: 10000,
   speedUpgradeRate: 200,
-  OWNED_LOCAL_STORAGE_KEY: "Coalminer.ownedDrills",
+  OWNED_LOCAL_STORAGE_KEY: "Coalminer.owneDrills",
 
-  saveAmount: function (ownedDrills) {
+  save: function () {
     localStorage.setItem(
       this.OWNED_LOCAL_STORAGE_KEY,
       JSON.stringify(ownedDrills)
